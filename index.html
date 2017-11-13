@@ -1,0 +1,300 @@
+<html>
+    <head>
+        <title>Victor Tran</title>
+        {% include heading.html %}
+    </head>
+    <body>
+        {% include loader.html %}
+        <div id="smoothstate">
+            <style>
+                @keyframes slideInLeft {
+                    from {
+                        width: 0%;
+                    }
+                    
+                    to {
+                        width: 100%;
+                    }
+                }
+                
+                @keyframes slideOutLeft {
+                    from {
+                        width: 100%;
+                    }
+                    
+                    to {
+                        width: 0%;
+                    }
+                }
+                .carousel {
+                    display: flex;
+                    align-items: center;
+                    overflow-x: hidden;
+                    color: white;
+                }
+                div.carousel > * {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    align-items: center;
+                    text-align: center;
+                    
+                    padding-top: 50px;
+                    padding-bottom: 50px;
+                }
+                
+                div.carouselTimer {
+                    position: relative;
+                    top: -2px;
+                    height: 2px;
+                    background: linear-gradient(90deg, rgb(0, 200, 0), 
+                                rgb(0, 200, 0) 33%, rgb(255, 200, 0) 33%,
+                                rgb(255, 200, 0) 66%, rgb(200, 200, 255) 66%) fixed;
+                }
+                
+                html.light div.carouselTimer {
+                    background: linear-gradient(90deg, rgb(0, 100, 0), 
+                                rgb(0, 100, 0) 33%, rgb(255, 100, 0) 33%,
+                                rgb(255, 100, 0) 66%, rgb(100, 100, 255) 66%) fixed;
+                }
+                
+                .carousel>div.carouselElement {
+                    flex-grow: 1;
+                    display: flex;
+                }
+                
+                .carouselBack {
+                    background-image: url("images/go-previous.svg");
+                    left: 0px;
+                }
+                
+                .carouselForward {
+                    background-image: url("images/go-next.svg");
+                    right: 0px;
+                }
+                
+                .carouselBack, .carouselForward {
+                    position: absolute;
+                    
+                    height: 100px;
+                    width: 40px;
+                    padding: 0px;
+                    top: 350px;
+                    
+                    background-position: center;
+                    background-repeat: no-repeat;
+                }
+                
+                .carouselBack:hover, .carouselForward:hover {
+                    background-color: #3c3c3c;
+                }
+                
+                .carouselBack:active, .carouselForward:active {
+                    background-color: #1b1b1b;
+                }
+                
+                .carouselElement {
+                    height: 600px;
+                    overflow-x: hidden;
+                    
+                    width: 0%;
+                    animation: slideOutLeft 0.5s cubic-bezier(0.5, 0.5, 0.5, 1);
+                }
+                
+                .carouselElement.active {
+                    width: 100%;
+                    animation: slideInLeft 0.5s cubic-bezier(0.5, 0.5, 0.5, 1);
+                }
+                
+                @media (max-height: 750px) {
+                    .carouselElement {
+                        height: 400px;
+                    }
+                    
+                    .carouselBack, .carouselForward {
+                        top: 200px;
+                    }
+                }
+                
+                div.theshell {
+                    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                                url("images/triangles.png") no-repeat center center/cover;
+                }
+                
+                div.thebeat {
+                    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                                url("images/thebeat.png") no-repeat center center/cover;
+                }
+                
+                div.theslate {
+                    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                                url("images/theslate.svg") no-repeat center center/cover;
+                }
+                
+                div.carouselElement .carouselLower {
+                    position: relative;
+                    transition: top 0.5s;
+                    top: 40px;
+                }
+                
+                div.carouselElement .carouselButtons {
+                    position: relative;
+                    transition: opacity 0.5s;
+                    opacity: 0;
+                }
+                
+                div.carousel.paused div.carouselElement .carouselLower {
+                    top: 0px;
+                }
+                
+                div.carousel.paused div.carouselElement .carouselButtons {
+                    opacity: 1;
+                }
+                
+                div.releaseAdvertisment {
+                    padding-top: 50px;
+                    padding-bottom: 50px;
+                    padding-left: 100px;
+                    padding-right: 100px;
+                    
+                    color: white;
+                    border-bottom: 1px solid var(--fg-color);
+                }
+                
+                @media (max-width: 500px) {
+                    div.releaseAdvertisment {
+                        padding-left: 10px;
+                        padding-right: 10px;
+                    }
+                }
+            </style>
+            {% include header.html %}
+            
+            <div class="carouselBack" onclick="decrementCarousel();"></div>
+            <div class="carouselForward" onclick="incrementCarousel();"></div>
+            <div class="carousel">
+                <div class="theshell carouselElement active">
+                    <div><h1>theShell 7.0</h1><p>Desktop Environment</p></div>
+                    <div class="carouselLower">
+                        <h2>Now released!</h2>
+                        <p>Down at its core, it's up for anything.</p>
+                        <div class="carouselButtons">
+                            <a href="./theshell/" class="button">Learn More</a>
+                            <a href="http://www.github.com/vicr123/theshell" class="button">See the code</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="thebeat carouselElement">
+                    <div><h1>theBeat</h1><p>Audio Player</p></div>
+                    <div class="carouselLower">
+                        <p>Keeps your computer beating.</p>
+                        <div class="carouselButtons">
+                            <a href="./thebeat/" class="button">Learn More</a>
+                            <a href="http://www.github.com/vicr123/thebeat" class="button">See the code</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="theslate carouselElement">
+                    <div><h1>theSlate</h1><p>Text Editor</p></div>
+                    <div class="carouselLower">
+                        <p>More than just a slate.</p>
+                        <div class="carouselButtons">
+                            <a href="./theslate/" class="button">Learn More</a>
+                            <a href="http://www.github.com/vicr123/theslate" class="button">See the code</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carouselTimer" id="carouselTimer"></div>
+            <div class="content">
+                <h1>Hey, I'm Victor!</h1>
+                <p>I create apps for the Linux platform, most of which are based on the Qt toolkit.</p>
+            </div>
+            
+            <script>
+                //Set up carousel
+                var timeout;
+                var carouselTimer = 0;
+                var carouselElements = [];
+                var currentCarousel = 0;
+                $('.carousel').children('.carouselElement').each(function() {
+                    carouselElements.push($(this));
+                    $(this).on('swipeLeft', incrementCarousel);
+                    $(this).on('swipeRight', decrementCarousel);
+                    
+                    if (/Mobi/.test(navigator.userAgent)) {
+                        $(this).css("animation", "none");
+                    }
+                });
+                
+                
+                function incrementTimer() {
+                    carouselTimer++;
+                    if (carouselTimer % 500 == 0) {
+                        incrementCarousel();
+                    }
+                    $("#carouselTimer").css("width", parseFloat(carouselTimer / 15) + "%");
+                    clearTimeout(timeout);
+                    timeout = setTimeout(incrementTimer, 10);
+                }
+                
+                function incrementCarousel() {
+                    carouselElements[currentCarousel].removeClass("active");
+                    currentCarousel++;
+                    if (currentCarousel >= carouselElements.length) {
+                        currentCarousel = 0;
+                    }
+                    carouselElements[currentCarousel].addClass("active");
+                    
+                    carouselTimer = currentCarousel * 500;
+                    
+                    if (/Mobi/.test(navigator.userAgent)) {
+                        clearTimeout(timeout);
+                        timeout = setTimeout(incrementCarousel, 5000);
+                    }
+                }
+                
+                function decrementCarousel() {
+                    carouselElements[currentCarousel].removeClass("active");
+                    currentCarousel--;
+                    if (currentCarousel < 0) {
+                        currentCarousel = carouselElements.length - 1;
+                    }
+                    carouselElements[currentCarousel].addClass("active");
+                    carouselTimer = currentCarousel * 500;
+                    
+                    if (/Mobi/.test(navigator.userAgent)) {
+                        clearTimeout(timeout);
+                        timeout = setTimeout(incrementCarousel, 5000);
+                    }
+                }
+                
+                //Check for mobile
+                if (/Mobi/.test(navigator.userAgent)) {
+                    $(".carouselTimer").hide();
+                    $('.carousel').addClass("paused");
+                    timeout = setTimeout(incrementCarousel, 5000);
+                } else {
+                    timeout = setTimeout(incrementTimer, 100);
+                }
+                
+                $('.carousel').on('swipeLeft', incrementCarousel);
+                $('.carousel').on('swipeRight', decrementCarousel);
+                
+                $('.carousel').hover(function() {
+                    if (!/Mobi/.test(navigator.userAgent)) {
+                        clearTimeout(timeout);
+                        $('.carousel').addClass("paused");
+                    }
+                }, function() {
+                    if (!/Mobi/.test(navigator.userAgent)) {
+                        timeout = setTimeout(incrementTimer, 100);
+                        $('.carousel').removeClass("paused");
+                    }
+                });
+            </script>
+            {% include footer.html %}
+        </div>
+        {% include footing.html %}
+    </body>
+</html>
